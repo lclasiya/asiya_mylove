@@ -1,0 +1,55 @@
+<div class="container">
+
+    <form th:action="@{/user}" method="post" th:object="${user}" id="userForm">
+        <!--<input type="hidden" name="id" th:value="*{id}">-->
+
+        <div class="form-group ">
+            <label for="username" class="col-form-label">アカウント</label>
+            <input type="text" class="form-control" id="username" name="username"  th:value="*{username}" maxlength="50" placeholder="登録名入力(2～20)">
+        </div>
+        <div class="form-group">
+            <label for="email" class="col-form-label">メールアドレス</label>
+            <input type="email" class="form-control" id="email" name="email" th:value="*{email}" maxlength="50" placeholder="メールアドレス入力">
+        </div>
+        <div class="form-group">
+            <label for="sex" class="col-form-label">性別</label>
+            <select class="form-control" name="sex" id="sex" >
+                <option th:text="*{sex}"></option>
+                <option value="男">男</option>
+                <option value="女">女</option>
+                <option value="ニューハーフ">ニューハーフ</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="age" class="col-form-label">年齢</label>
+            <input type="text" class="form-control" id="age" name="age" th:value="*{age}" maxlength="2" placeholder="年齢入力" >
+        </div>
+        <div class="form-group">
+            <label for="tend" class="col-form-label">趣向</label>
+            <select class="form-control" name="tend" id="tend">
+                <option th:text="*{tend}"></option>
+                <option  >アナル</option>
+                <option  >潮吹き</option>
+                <option  >フェラ</option>
+                <option  >長身</option>
+                <option  >欧米</option>
+                <option  >痴女</option>
+                <option  >変態</option>
+                <option  >中国</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="password" class="col-form-label">パスワード</label>
+            <input type="password" class="form-control" id="password" name="password"  th:value="*{password}" maxlength="30" placeholder="パスワード入力" >
+        </div>
+        <div class="form-group">
+            <label for="authorities" class="col-form-label">権限</label>
+            <select id="authorities" name="authorityid" class="form-control form-control-chosen" data-placeholder="選択してください">
+
+                <option value="2" >ユーザー</option>
+                <option value="1" >管理人</option>
+            </select>
+        </div>
+    </form>
+
+</div>

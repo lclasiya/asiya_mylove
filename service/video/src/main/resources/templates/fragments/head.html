@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" data-th-fragment="head">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ero-porn</title>
+    <link href="../../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="../../css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}" rel="stylesheet">
+    <link href="../../css/bootstrap-tagsinput.css" th:href="@{/css/jquery.tagsinput.min.css}" rel="stylesheet">
+    <link href="../../css/toastr.min.css" th:href="@{/css/toastr.min.css}" rel="stylesheet">
+    <link href="../../js/bootstrap-table/bootstrap-table.min.css" th:href="@{/js/bootstrap-table/bootstrap-table.min.css}" rel="stylesheet">
+    <link href="../../js/jquery-ui/jquery-ui.min.css" th:href="@{/js/jquery-ui/jquery-ui.min.css}" rel="stylesheet">
+    <link href="../../js/web-uploader/webuploader.css" th:href="@{/js/web-uploader/webuploader.css}" rel="stylesheet">
+    <link href="../../css/style.css" th:href="@{/css/style.css}" rel="stylesheet">
+    <link href="../../js/cropper/cropper.min.css" th:href="@{/js/cropper/cropper.min.css}" rel="stylesheet">
+    <link href="../../js/cropper/sitelogo.css" th:href="@{/js/cropper/sitelogo.css}" rel="stylesheet">
+    <link href="../../js/video-play/video-js.min.css" th:href="@{/js/video-play/video-js.min.css}" rel="stylesheet">
+
+</head>
+<body>
+<nav class="navbar navbar-inverse bg-inverse navbar-toggleable-md">
+    <a class="navbar-brand p-0" href="/" th:href="@{/ero}" style="font-size: 30px">エロポン</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav mr-auto">
+            <form class="form-inline " th:action="@{/ero}">
+                <input class="form-control " type="text" name="keyword" placeholder="検索キーワード入力" id="indexkeyword" >
+                <button type="submit" class="btn btn-outline-secondary my-2 my-sm-0" id="indexsearch"><i class="fa fa-search"></i></button>
+            </form>
+        </ul>
+        <div sec:authorize="isAuthenticated()" class="row">
+            <div class="mr-2">
+                <a th:href="@{/u/1}">
+                    <img th:src="@{/js/cropper/vl_720P_1173.0k_61219871.png}"  class="image-icon">
+                </a>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary" ><span sec:authentication="name"></span></button>
+                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
+                    <span class="caret"></span>
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" th:href="@{'/userEdit?name='+ ${#authentication.name}}">編集</a>
+                </div>
+            </div>
+            <form action="/logout" th:action="@{/logout}" method="post">
+                <input class="btn btn-outline-success " type="submit" value="ログアウト">
+            </form>
+        </div>
+        <div sec:authorize="isAnonymous()">
+            <a href="/login" class="btn btn-outline-success my-2 my-sm-0" type="submit">ログイン</a>
+            <a href="/register" class="btn btn-outline-success my-2 my-sm-0" type="submit">サインイン</a>
+        </div>
+    </div>
+</nav>
+</body>
+</html>

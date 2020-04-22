@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head}">
+</head>
+<body>
+<div class="container" >
+    <form th:action="@{/login}" method="post">
+        <h2>ログイン</h2>
+        <div class="form-group">
+            <label for="username" class="col-form-label">アカウント</label>
+            <input type="text" class="form-control" id="username" name="username" maxlength="50" placeholder="登録名を入力してください">
+        </div>
+        <div class="form-group">
+            <label for="password" class="col-form-label">パスワード</label>
+            <input type="password" class="form-control" id="password" name="password" maxlength="30" placeholder="パスワードを入力してください" >
+        </div>
+        <div class=" col-md-5" th:if="${ifError}">
+            <p class="login-error" th:text="${message}"></p>
+        </div>
+        <div class="form-group col-md-5">
+            <button type="submit" class="btn btn-primary">登録</button>
+        </div>
+
+    </form>
+</div>
+<div th:replace="fragments/foot :: footer">...</div>
+</body>
+</html>

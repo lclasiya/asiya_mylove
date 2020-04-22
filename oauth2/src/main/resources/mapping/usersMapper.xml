@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="li.changlin.oauth2.mapper.UsersMapper">
+    <resultMap id="UserResultMap" type="li.changlin.user.entity.User">
+        <id column="id" property="id" />
+        <result column="username" property="username" />
+        <result column="avatar" property="avatar" />
+        <result column="sex" property="sex" />
+        <result column="tend" property="tend" />
+        <result column="age" property="age" />
+        <result column="email" property="email" />
+        <result column="password" property="password" />
+        <result column="authorityid" property="authorityid" />
+        <result column="lovers" property="lovers" />
+    </resultMap>
+    <insert id="addUser" >
+        insert into  user (username,avatar,sex,tend, age, email, password,authorityid,lovers)
+        values (#{username},#{avatar},#{sex},#{tend},#{age},#{email},#{password},#{authorityid},#{lovers})
+    </insert>
+
+    <update id="updateById">
+        UPDATE user
+        SET username = #{username},
+            avatar = #{avatar},
+            sex = #{sex},
+            tend = #{tend},
+            age = #{age},
+            email = #{email},
+            password = #{password},
+            authorityid = #{authorityid},lovers = #{lovers}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="removeUser">
+        DELETE FROM user WHERE id = #{id}
+    </delete>
+
+    <select id="getUserById"  resultMap="UserResultMap">
+      SELECT * FROM user WHERE id = #{id}
+    </select>
+
+    <select id="getUserByName"  resultMap="UserResultMap">
+      SELECT * FROM user WHERE username = #{name}
+    </select>
+
+    <select id="listAll" resultMap="UserResultMap">
+        select * from user order by id asc
+    </select>
+
+    <select id="listAllWithPage" resultMap="UserResultMap">
+        select * from user order by id asc
+    </select>
+
+
+</mapper>

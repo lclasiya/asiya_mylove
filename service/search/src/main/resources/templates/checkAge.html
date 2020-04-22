@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ageCheck</title>
+    <link href="../../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <style>
+        .checkAge{
+            text-align: center; /*让div内部文字居中*/
+            background-color: #fff;
+            border-radius: 20px;
+            width: 400px;
+            height: 350px;
+            margin: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        a{
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="checkAge" >
+<p style="font-size: 50px">
+    年齢確認
+</p>
+<div>
+<a href="/ero" class="btn mr-4" style="font-size: 30px">18歳以上 </a>
+<a href="/under18" class="btn" style="font-size: 30px"> 18歳未満</a>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="~{fragments/head :: head}">
+</head>
+<body>
+<div class="video-content-container">
+    <div class="row">
+        <div class="col-md-8">
+<div class="card">
+    <div class="card-block">
+        <h2 class="card-title">
+            <a th:href="'/u/' + ${user.id}" th:title="${user.username}">
+                <img th:src="${user.avatar} ==''? '/js/cropper/vl_720P_1173.0k_61219871.png' : ${user.avatar}"
+                     class="image-icon-big">
+            </a>
+            <span th:text="${video.title}">
+            </span>
+        </h2>
+        <div class="card-text">
+            <div id="abc">
+                <div id="def">
+            <a th:href="'/u/' + ${user.id}" class="card-link" th:text="${user.username}"></a> さんが
+            [[${#dates.format(video.createTime, 'yyyy-MM-dd HH:mm')}]]に発表
+            <i class="fa fa-eye">[[${video.readSize}]]</i>
+            <i class="fa fa-heart-o">[[${video.voteSize}]]</i>
+            <i class="fa fa-comment-o">[[${video.commentSize}]]</i>
+            <h5 class="ml-4 text-success" style="display: inline-block">タグ：
+                <span class="text-muted" th:text="${video.tags}"></span>
+            </h5>
+            <h5 class="ml-4 text-success" style="display: inline-block">対象：
+                <span class="text-muted" th:text="${video.object}"></span>
+            </h5>
+            <button class="btn btn-primary ml-4" th:if="${currentVote} == null" id="submitVote">いいね</button>
+            <button class="btn btn-primary ml-4" th:if="${currentVote}" th:attr="voteId=${currentVote.ID}" id="cancelVote">
+                ださっ
+            </button>
+                </div>
+            </div>
+        <hr>
+        <div class="m">
+            <div id="video_box">
+                <video id='example-video' class="video-js vjs-default-skin Fn vjs-big-play-centered" controls>
+                    <source th:src="${videoUrl}" type="video/mp4">
+                </video>
+            </div>
+            <script>
+                var videojs = videojs('example-video', {
+                    controls: true, //是否控制条
+                    autoplay: false, //自动播放
+                    preload: 'auto' //预加载
+                });
+            </script>
+        </div>
+        </div>
+    </div>
+</div>
+        </div>
+        <div class="col-md-4">
+            <div class="card" style="border: none;margin-top: 20px">
+    <div class="card-block">
+        <h5>コメント</h5>
+        <div >
+            <textarea class="blog-textarea" placeholder="コメント残してほしいな^^" id="commentContent"></textarea>
+        </div>
+        <button class="btn btn-primary float-right" id="submitComment">発表</button>
+
+    </div>
+    <div class="card-block" id="mainContainer">
+
+        <div class="row" id="mainContainerRepleace" th:each="comment,commentStat : ${comments}" th:object="${comment}">
+            <div class="card-title col-lg-1 col-md-2 text-left">
+                <span>
+                  <a  th:href="'/u/'+ *{user.username}" th:title="*{user.username}">
+                    <img th:src="*{user.avatar} == '' ? '/js/cropper/vl_720P_1173.0k_61219871.png' : *{user.avatar}" class="image-icon">
+                  </a>
+                </span>
+            </div>
+            <div class="card-text col-lg-11 col-md-10 ">
+                <a th:href="'/u/'+ *{user.id}" class="card-link" th:text="*{user.username}"></a>
+                [[${commentStat.index} + 1]]階 [[${#dates.format(comment.createTime, 'yyyy-MM-dd HH:mm')}]]
+                <a href="javascript:void(0)" class="video-delete-comment" th:if="${commentOwner} eq *{user.username}" th:attr="commentId=*{ID}">
+                    <i class="fa fa-trash-o"></i>
+                </a>
+                <p th:text="*{content}"></p>
+            </div>
+        </div>
+
+    </div>
+            </div>
+        </div>
+
+
+</div>
+</div>
+<div th:replace="fragments/foot :: footer">...</div>
+<script th:inline="javascript">
+    var videoId = [[${video.id}]];
+</script>
+<script src="../../js/video/video.js" th:src="@{/js/video/video.js}"></script>
+<script src="../../js/video/video3.js" th:src="@{/js/video/video3.js}"></script>
+</body>
+</html>

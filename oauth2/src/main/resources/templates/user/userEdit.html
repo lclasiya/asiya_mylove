@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ero-porn</title>
+    <link href="../../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="../../css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}" rel="stylesheet">
+    <link href="../../css/bootstrap-tagsinput.css" th:href="@{/css/jquery.tagsinput.min.css}" rel="stylesheet">
+    <link href="../../css/toastr.min.css" th:href="@{/css/toastr.min.css}" rel="stylesheet">
+    <link href="../../js/bootstrap-table/bootstrap-table.min.css" th:href="@{/js/bootstrap-table/bootstrap-table.min.css}" rel="stylesheet">
+    <link href="../../js/jquery-ui/jquery-ui.min.css" th:href="@{/js/jquery-ui/jquery-ui.min.css}" rel="stylesheet">
+    <link href="../../js/web-uploader/webuploader.css" th:href="@{/js/web-uploader/webuploader.css}" rel="stylesheet">
+    <link href="../../css/style.css" th:href="@{/css/style.css}" rel="stylesheet">
+    <link href="../../js/cropper/cropper.min.css" th:href="@{/js/cropper/cropper.min.css}" rel="stylesheet">
+    <link href="../../js/cropper/sitelogo.css" th:href="@{/js/cropper/sitelogo.css}" rel="stylesheet">
+    <link href="../../js/video-play/video-js.min.css" th:href="@{/js/video-play/video-js.min.css}" rel="stylesheet">
+</head>
+<body style="overflow:hidden;">
+<nav class="navbar navbar-inverse bg-inverse navbar-toggleable-md">
+    <a  class="btn btn-warning navbar-brand p-0" href="http://localhost:8765/"  style="font-size: 30px">戻る</a>
+</nav>
+<h2 >エロポンの一メンバーになりましょう‼</h2>
+<div class="container " >
+    <div >
+        <label  class="col-form-label">アイコン</label>
+        <div class="ibox-content">
+            <div class="row">
+                <div id="crop-avatar" class="col-md-6">
+                    <div class="avatar-view" title="Change Logo Picture">
+                        <img th:src="${user == null}? '/js/cropper/vl_720P_1173.0k_61219871.png' : ${user.avatar}" alt="Logo">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="avatar-modal"  tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="avatar-modal-label">アイコン変更</h4>
+                        <button class="close" data-dismiss="modal" type="button">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="avatar-body">
+                            <div class="avatar-upload">
+                                <form class="avatar-form" action="/userIcon" enctype="multipart/form-data" method="post">
+                                    <label for="avatarInput">画像アップロード</label>
+                                    <input class="avatar-input" id="avatarInput" name="file" type="file">
+                                </form>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <div class="avatar-wrapper"></div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="avatar-preview preview-lg"></div>
+                                    <div class="avatar-preview preview-md"></div>
+                                    <div class="avatar-preview preview-sm"></div>
+                                </div>
+                            </div>
+                            <div class="row avatar-btns">
+                                <div class="col-md-9">
+                                    <div class="btn-group">
+                                        <button class="btn" data-method="rotate" data-option="-90" type="button" title="Rotate -90 degrees"><i class="fa fa-undo"></i> 左回転</button>
+                                    </div>
+                                    <div class="btn-group">
+                                        <button class="btn" data-method="rotate" data-option="90" type="button" title="Rotate 90 degrees"><i class="fa fa-repeat"></i> 右回転</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <button class="btn btn-success btn-block avatar-save" ><i class="fa fa-save"></i> 保存</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form action="/userEdit"  method="post" th:object="${user}">
+        <input id="sumbitAvatar" type="hidden" name="avatar" th:value="*{avatar}">
+        <input type="hidden" name="id" th:value="*{id}">
+        <input id="authorityid" type="hidden" name="authorityid" value="2">
+        <div class="form-group ">
+            <label for="username" class="col-form-label">アカウント</label>
+            <input type="text" class="form-control" id="username" pattern="[A-Za-z0-9_]{2,10}" name="username" required  th:value="*{username}"
+                   maxlength="10" placeholder="登録名入力(2文字から20文字まで、アルファベットと数字とアンダースコアのみ)">
+        </div>
+        <div class="form-group">
+            <label for="email" class="col-form-label">メールアドレス</label>
+            <input type="email" class="form-control" id="email" pattern="^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$" name="email"
+                   th:value="*{email}" required maxlength="50" placeholder="メールアドレス入力(通用メールパターンに従ってください)">
+        </div>
+        <div class="form-group">
+            <label for="sex" class="col-form-label">性別</label>
+            <select class="form-control" required name="sex" id="sex">
+                <option value="男" th:selected="${#strings.contains(user.sex,'男')}">男</option>
+                <option value="女" th:selected="${#strings.contains(user.sex,'女')}">女</option>
+                <option value="ニューハーフ" th:selected="${#strings.contains(user.sex,'ニューハーフ')}">ニューハーフ</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="age" class="col-form-label">年齢</label>
+            <input type="text" class="form-control" id="age" name="age" th:value="*{age}" maxlength="3" required
+                   min="18" max="150" placeholder="年齢入力(18歳以下禁止)" >
+        </div>
+        <div class="form-group">
+            <label for="tend" class="col-form-label">趣向</label>
+            <select class="form-control" required name="tend" id="tend">
+                <option th:text="*{tend}"></option>
+                <option  >アナル</option>
+                <option  >潮吹き</option>
+                <option  >フェラ</option>
+                <option  >長身</option>
+                <option  >欧米</option>
+                <option  >痴女</option>
+                <option  >変態</option>
+                <option  >中国</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="password" class="col-form-label">新しいパスワード</label>
+            <input type="password" class="form-control" id="password" name="password"  maxlength="20" required
+                   pattern="[\S]{6,20}" placeholder="パスワード入力(6文字から20文字まで)" >
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">提出</button>
+        </div>
+    </form>
+</div>
+<div th:replace="fragments/foot :: footer"  >...</div><!-- /container -->
+</body>
+</html>

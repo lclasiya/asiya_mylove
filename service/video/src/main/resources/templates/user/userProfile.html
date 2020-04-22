@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="~{fragments/head :: head}">
+</head>
+<body>
+<div class="container-fluid video-content-container">
+    <div class="row">
+        <div class="col-md-4 mt-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <span>
+                        <img th:src="${#authentication.principal.avatar == '' || #authentication.principal.avatar == null}? '/js/cropper/vl_720P_1173.0k_61219871.png' : ${user.avatar} " class="video-avatar-230">
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <span class="card-text" th:text="${user.username}" style="font-size: 50px"></span>
+                    <button th:if="${user.username} eq ${#authentication.name}"　id="videoDelete" class="btn btn-danger float-right mt-3 mr-4">動画削除</button>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-md-12">
+                    <h5><i class="fa fa-envelope-o" ></i>
+                        <a th:href="'mailto:'+ ${user.email}" th:text="${user.email}"></a>
+                    </h5>
+                    <h5>
+                        <span>性別: [[${user.sex}]]</span>
+                    </h5>
+                    <h5>
+                        <span>年齢: [[${user.age}]]</span>
+                    </h5>
+                    <h5>
+                        <span>好み: [[${user.tend}]]</span>
+                    </h5>
+                </div>
+            </div>
+</div>
+        <div class="col-md-8 mt-5">
+            <div id="mainContainer">
+            <div class="row">
+                <div class="col-md-4" th:each="esVideo : ${videoList}">
+                    <div class="imageAll" style="position: relative" th:id="${esVideo.id}">
+                        <div class="imageHover disabled" >
+                            <a th:href="'/video/' + ${esVideo.videoID}" th:each="image : ${esVideo.imagesList}">
+                                <img  th:src="@{${image}}">
+                                <div class="video-length" th:text="${esVideo.videoLength}"></div>
+                            </a>
+                        </div>
+                        <div class="imageCover" >
+                            <a th:href="'/video/' + ${esVideo.videoID}" >
+                                <img th:src="${esVideo.coverImage != ''} ? '/uploadFiles/' + ${esVideo.coverImage} : '/js/video/720p.h25678464.png'">
+                                <div class="video-length" th:text="${esVideo.videoLength}"></div>
+                            </a>
+                        </div>
+                        <div class="deleteDiv" style="display: none">
+                            <a type="button" class="btn btn-danger bg-inverse" th:href="'/delete/'+ ${esVideo.videoID}" style="font-size: 20px">×</a>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <a href="#" style="text-decoration: none" th:text="${esVideo.title}"></a>
+                        <div class="view-size small">
+                            <i class="fa fa-eye" >[[${esVideo.readSize}]]</i>
+                            <i class="fa fa-heart-o" >[[${esVideo.voteSize}]]</i>
+                            <i class="fa fa-comment-o" >[[${esVideo.commentSize}]]</i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+</div>
+<div th:replace="fragments/foot :: footer"  >...</div>
+<script src="../../js/video/video.js" th:src="@{/js/video/video.js}"></script>
+<script src="../../js/video/video2.js" th:src="@{/js/video/video2.js}"></script>
+</body>
+</html>

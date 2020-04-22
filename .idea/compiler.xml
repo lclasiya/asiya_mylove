@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="common" />
+        <module name="eureka-server" />
+        <module name="gateway" />
+        <module name="goodvideo" />
+        <module name="oauth2" />
+        <module name="search" />
+        <module name="user-api" />
+        <module name="video" />
+        <module name="video-api" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="asiya_mylove" target="1.8" />
+      <module name="auth-server" target="1.8" />
+      <module name="authority-api" target="1.8" />
+      <module name="common" target="1.8" />
+      <module name="esvideo-api" target="1.8" />
+      <module name="eureka-server" target="1.8" />
+      <module name="gateway" target="1.8" />
+      <module name="goodvideo" target="1.8" />
+      <module name="oauth2" target="1.8" />
+      <module name="search" target="1.8" />
+      <module name="service" target="1.8" />
+      <module name="service-api" target="1.8" />
+      <module name="user" target="1.8" />
+      <module name="user-api" target="1.8" />
+      <module name="video" target="1.8" />
+      <module name="video-api" target="1.8" />
+      <module name="videos" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="li.changlin.video.mapper.VideoMapper">
+    <resultMap id="VideoResultMap" type="li.changlin.video.entity.Video">
+        <id column="id" property="id" />
+        <result column="comment_size" property="commentSize" />
+        <result column="cover_image" property="coverImage" />
+        <result column="create_time" property="createTime" />
+        <result column="images" property="images" />
+        <result column="object" property="object" />
+        <result column="read_size" property="readSize" />
+        <result column="tags" property="tags" />
+        <result column="title" property="title" />
+        <result column="video_length" property="videoLength" />
+        <result column="video_qua" property="videoQua" />
+        <result column="video_url" property="videoUrl" />
+        <result column="vote_size" property="voteSize" />
+        <result column="user_name" property="userName" />
+    </resultMap>
+    <insert id="addVideo" useGeneratedKeys="true" keyProperty="id">
+        insert into video (comment_size,cover_image,create_time,images,object,read_size,tags,title,video_length,video_qua,video_url,vote_size,user_name)
+        values (#{commentSize},#{coverImage},current_timestamp ,#{images},#{object},#{readSize},#{tags},#{title},#{videoLength},
+        #{videoQua},#{videoUrl},#{voteSize},#{userName})
+    </insert>
+
+    <update id="updateById">
+        UPDATE video
+        SET comment_size = #{commentSize},cover_image = #{coverImage},images = #{images},object = #{object},read_size = #{readSize},
+            tags = #{tags},title = #{title},vote_size = #{voteSize}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="removeVideo">
+        DELETE FROM video WHERE id = #{id}
+    </delete>
+
+    <select id="getVideoById"  resultMap="VideoResultMap">
+      SELECT * FROM video WHERE id = #{id}
+    </select>
+
+    <select id="listAllWithPage" resultMap="VideoResultMap">
+        select * from video order by id asc
+    </select>
+
+
+</mapper>

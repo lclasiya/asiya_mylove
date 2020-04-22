@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="~{fragments/head :: head}">
+</head>
+<body>
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-md-2 category" >
+            <h3 >カテゴリ</h3>
+            <ul id="tagoption" class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link tag-a" style="display: none" value="">アナル</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0)" value="anal">アナル</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0)" value="squirt">潮吹き</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0)" value="blowjob">フェラ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0)" value="tall">長身</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0)" value="europe">欧米</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0)" value="mistress">痴女</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0)" value="hentai">変態</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0)" value="chinese">中国</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-10 esVideo-border">
+
+            <div class="chooseOption mb-4">
+                    <span class="font-weight-bold mr-2">再生時間:</span>
+                <select id="videoLength" >
+                    <option value="">選んでもいいよ</option>
+                    <option value="short">10分以下</option>
+                    <option value="middle">10分～20分</option>
+                    <option value="long">20分以上</option>
+                </select>
+                      <span class="font-weight-bold mr-2 ml-4">対象:</span>
+                <select id="videoObject">
+                <option value="">選んでもいいよ</option>
+                <option value="straight">ノンケ</option>
+                    <option value="gay">同性愛</option>
+                    <option value="shemale">ニューハーフ</option>
+                </select >
+                    <span class="font-weight-bold mr-2 ml-4">画質:</span>
+                <select id="videoQuality">
+                    <option value="">選んでもいいよ</option>
+                    <option value="dim">240p</option>
+                    <option value="fuzzy">480p</option>
+                    <option value="clear">720p</option>
+                </select>
+                <a sec:authorize="isAuthenticated()" class="btn btn-success text-justify" href="/ero/add">
+                    <h4><i class="fa fa-paper-plane mr-4"></i>一本アップしましょう</h4>
+
+                </a>
+            </div>
+            <div id="mainContainer">
+            <div id="videoReplace">
+            <div class="row">
+                <div class="col-md-3" th:each="esVideo : ${videoList}">
+                    <div class="imageAll" style="position: relative" th:id="${esVideo.id}">
+                        <div class="imageHover disabled" >
+                            <a th:href="'/video/' + ${esVideo.videoID}" th:each="image : ${esVideo.imagesList}">
+                                <img  th:src="@{${image}}">
+                                <div class="video-length" th:text="${esVideo.videoLength}">9999</div>
+                            </a>
+                        </div>
+                        <div class="imageCover" >
+                            <a th:href="'/video/' + ${esVideo.videoID}" >
+                                <img th:src="${esVideo.coverImage != ''} ? '/uploadFiles/' + ${esVideo.coverImage} : '/js/video/720p.h25678464.png'">
+                                <div class="video-length" th:text="${esVideo.videoLength}">9999</div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <a href="#" style="text-decoration: none" th:text="${esVideo.title}">Elegant MILF fingered and pounded hard before swallowing cum</a>
+                        <div class="view-size small">
+                            <i class="fa fa-eye" >[[${esVideo.readSize}]]</i>
+                            <i class="fa fa-heart-o" >[[${esVideo.voteSize}]]</i>
+                            <i class="fa fa-comment-o" >[[${esVideo.commentSize}]]</i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div th:replace="~{fragments/page :: page}">...</div>
+            </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+    </div>
+</div>
+<div th:replace="fragments/foot :: footer"  >...</div>
+<script th:inline="javascript">
+    var imagesSum = [[${imageLists}]];
+
+</script>
+<script src="../../js/video/video.js" th:src="@{/js/video/video.js}"></script>
+<script src="../../js/video/video2.js" th:src="@{/js/video/video2.js}"></script>
+<script src="../../js/myTable/thymeleaf-bootstrap-paginator.js" th:src="@{/js/myTable/thymeleaf-bootstrap-paginator.js}"></script>
+</body>
+</html>
