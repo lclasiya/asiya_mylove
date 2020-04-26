@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
+import java.util.List;
 import java.util.Set;
 
 @Configuration
@@ -31,8 +33,8 @@ public class VideoDataTask extends QuartzJobBean {
             Set<String> video_failed = stringRedisTemplate.opsForSet().members("video_failed");
             String sql = "select * from video where id=?;";
             for (String videoId : video_failed){
-                Video video = jdbcTemplate.queryForObject(sql, Video.class, videoId);
-                EsVideo esVideo = ss.buildEsVideo(video);
+                List<Video> videoList = jdbcTemplate.query(sql,new Object[]{videoId} ,new BeanPropertyRowMapper<>(Video.class));
+                EsVideo esVideo = ss.buildEsVideo(videoList.get(0));
                 ss.saveEsVideo(esVideo);
                 stringRedisTemplate.opsForSet().remove("video_failed",videoId);
             }
