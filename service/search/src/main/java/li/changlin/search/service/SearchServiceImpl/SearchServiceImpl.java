@@ -100,7 +100,6 @@ public class SearchServiceImpl implements SearchService {
         }else {
             esVideo.setNagasa("long");
         }
-
         return esVideo;
 
     }

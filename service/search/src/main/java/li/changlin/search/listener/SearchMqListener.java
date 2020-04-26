@@ -29,23 +29,24 @@ public class SearchMqListener {
     public static String sessionId;
 
     @RabbitListener(queues = "asiya.video.save.queue")
-    public void listenCreate(Map map,Channel channel,@Header(AmqpHeaders.DELIVERY_TAG) long tag,
-                             @Header(AmqpHeaders.REDELIVERED) boolean reDelivered)throws IOException{
+    public void listenCreate(Map map,Channel channel,@Header(AmqpHeaders.DELIVERY_TAG) long tag/*,
+                             @Header(AmqpHeaders.REDELIVERED) boolean reDelivered*/)throws IOException{
         try {
             sessionId = (String) map.get("sessionId");
             Integer videoId = (Integer) map.get("videoId");
             if (stringRedisTemplate.opsForValue().get("mideng:"+videoId)==null){
-                ss.addEsVideoFromVideo(videoId);
                 stringRedisTemplate.opsForValue().set("mideng:"+videoId,"1");
+                ss.addEsVideoFromVideo(videoId);
             }
             channel.basicAck(tag,false);
         } catch (Exception e) {
             e.printStackTrace();
-            if (reDelivered){
+            channel.basicReject(tag,false);
+            /*if (reDelivered){
                 channel.basicReject(tag,false);
             }else {
                 channel.basicNack(tag,false,true);
-            }
+            }*/
         }
     }
     @RabbitListener(queues = "asiya.video.dl.queue")

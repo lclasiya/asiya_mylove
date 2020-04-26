@@ -8,7 +8,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(value = "video",configuration = FeignRequestInterceptor.class)
+@FeignClient(value = "video",configuration = FeignRequestInterceptor.class,fallback = VideoFeignFallback.class)
 public interface VideoFeignClient /*extends VideoFeign*/ {
     @RequestMapping(value = "/video/{id}",method = RequestMethod.GET )
     @ResponseBody

@@ -5,7 +5,7 @@ import li.changlin.video.entity.Video;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(value = "oauth2")
+@FeignClient(value = "oauth2",fallback = UserFeignFallback.class)
 public interface UserFeignClient {
     @RequestMapping(value = "/getUser",method = RequestMethod.GET )
     @ResponseBody
