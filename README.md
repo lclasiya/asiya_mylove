@@ -9,15 +9,15 @@
 ***
 ### 各工具版本
 ##### springboot-2.0.3,&emsp;   springcloud-Finchley.RELEASE,&emsp;   redis-4.0.14,&emsp;    elasticsearch-5.5.0,&emsp;   rabbitmq-3.7.7-management,&emsp;   fastdfs-(docker pull delron/fastdfs)    
-#### 主页
+#### 主页:
 ![homepage](https://github.com/lclasiya/asiya_mylove/blob/master/common/src/main/java/li/changlin/common/images/homepage.png)
-#### 用户注册
+#### 用户注册:
 ![register](https://github.com/lclasiya/asiya_mylove/blob/master/common/src/main/java/li/changlin/common/images/%E7%94%A8%E6%88%B7%E6%B3%A8%E5%86%8C.png)
-#### 视频上传
+#### 视频上传:
 ![upload](https://github.com/lclasiya/asiya_mylove/blob/master/common/src/main/java/li/changlin/common/images/%E8%A7%86%E9%A2%91%E4%B8%8A%E4%BC%A0.png)
-#### 用户页
+#### 用户页:
 ![userProfile](https://github.com/lclasiya/asiya_mylove/blob/master/common/src/main/java/li/changlin/common/images/userProfile.png)
-#### 视频播放页
+#### 视频播放页:
 ![videoPage](https://github.com/lclasiya/asiya_mylove/blob/master/common/src/main/java/li/changlin/common/images/videoPage.png)
-#### redis
+#### redis:
 ![redis](https://github.com/lclasiya/asiya_mylove/blob/master/common/src/main/java/li/changlin/common/images/redis.png)
