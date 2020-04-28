@@ -13,6 +13,7 @@ import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -90,6 +91,7 @@ public class EsVideoCon {
     }
     @GetMapping("/userIcon")
     @ResponseBody
+    @Cacheable(value = "getUserIcon")
     public String getUserIcon(String username){
         String sql = "select avatar from user where username=?;";
         String icon = jdbcTemplate.queryForObject(sql,String.class,username);

@@ -6,6 +6,7 @@ import li.changlin.user.entity.User;
 import li.changlin.video.entity.Video;
 import li.changlin.video.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -46,17 +47,15 @@ public class VideoCon {
         String redirectUrl = "http://localhost:8765/";
         return ResponseEntity.ok().body(new Response(true, "アップロード成功", redirectUrl));
     }
-    @GetMapping("/video/delete/{videoID}")
+    /*@GetMapping("/video/delete/{videoID}")
     public String deleteVideo(@PathVariable("videoID")Integer videoID){
        // int userID = vs.getVideoById(videoID).getUser().getId();
         vs.removeVideo(videoID);
         return "redirect:/u";// + userID;
-
-    }
+    }*/
     @GetMapping(value = "/video/{id}")
     @ResponseBody
-    public Video getVideoById(@PathVariable("id")Integer id,HttpServletRequest httpServletRequest){
-        System.out.println(httpServletRequest.getRequestedSessionId());
+    public Video getVideoById(@PathVariable("id")Integer id){
         return vs.getVideoById(id);
     }
     @GetMapping("/getPrinciple")

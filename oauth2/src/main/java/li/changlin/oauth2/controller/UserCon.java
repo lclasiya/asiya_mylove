@@ -8,6 +8,9 @@ import li.changlin.oauth2.service.UsersService;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +36,8 @@ public class UserCon {
     private FastFileStorageClient storageClient;
     @Autowired
     private JdbcTemplate jdbcTemplate;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @GetMapping("/register")
     public String getRegister() {
@@ -65,6 +70,18 @@ public class UserCon {
         jdbcTemplate.update(sql,obj);
         return "http://192.168.30.164:8888/"+uploadFile.getFullPath();
     }
+    @GetMapping("/getUser")
+    @ResponseBody
+    @Cacheable(value = "getUser",key = "#username")
+    public User getUser(@RequestParam(value = "username")String username){
+        User user = us.getUserByName(username);
+        return user;
+    }
+    @GetMapping("/user/add")
+    public String adduser(Model model) {
+        model.addAttribute("user", new User(null,0,null,null,null,null,0));
+        return "user/add";
+    }
     @GetMapping("/userEdit")
     //@PreAuthorize("authentication.name.equals(#username)")
     public String getUserEdit(@RequestParam(value = "name") String username, Model model) {
@@ -73,7 +90,9 @@ public class UserCon {
         return "user/userEdit";
     }
     @PostMapping("/userEdit")
+    @CacheEvict(value = "getUser",key = "#user.username",beforeInvocation = true)
     public String userEdit(User user) {
+        redisTemplate.delete("getUserIcon::"+user.getUsername());
         User originalUser = us.getUserById(user.getId());
         originalUser.setAvatar(user.getAvatar());
         originalUser.setTend(user.getTend());

@@ -8,6 +8,9 @@ import li.changlin.user.entity.User;
 import li.changlin.oauth2.service.AuthorityService;
 import li.changlin.oauth2.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -48,17 +51,7 @@ public class AdminCon {
         map.put("rows", users.getResult());
         return map;
     }
-    @GetMapping("/getUser")
-    @ResponseBody
-    public User getUser(@RequestParam(value = "username")String username){
-        User user = us.getUserByName(username);
-        return user;
-    }
-    @GetMapping("/user/add")
-    public String adduser(Model model) {
-        model.addAttribute("user", new User(null,0,null,null,null,null,0));
-        return "user/add";
-    }
+
     @DeleteMapping(value = "/user/{id}")
     @ResponseBody
     public ResponseEntity<Response> delete(@PathVariable("id") Integer id) {
