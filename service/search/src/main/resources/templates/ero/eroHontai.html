@@ -38,6 +38,30 @@
                     <a class="nav-link" href="javascript:void(0)" value="chinese">中国</a>
                 </li>
             </ul>
+            <hr>
+            <div class="card my-4">
+                <h5 class="card-header"><i class="fa fa-fire"></i>人気動画</h5>
+                <ul class="list-group" th:each="hotvideo , hotvideoStat : ${hotVideos}" th:object="${hotvideo}">
+                    <a  th:href="'/video/' + *{videoID}" class="list-group-item">
+                        <img th:src="*{coverImage}" style="width: 35px;height: 35px">
+                        <span class="badge badge-pill" th:classappend="${hotvideoStat.index} eq 0 ? 'badge-danger': (${hotvideoStat.index} eq 1 ? 'badge-warning':'badge-default')">[[*{title}]]</span>
+                    </a>
+                </ul>
+            </div>
+            <div class="card my-4">
+                <h5 class="card-header"><i class="fa fa-users"></i>最強投稿者</h5>
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <span th:each="user: ${hotUsers}" th:object="${user}">
+                              <a  th:href="'/user/'+ *{username}" th:title="*{username}">
+                                <img th:src="*{avatar}" style="width: 35px;height: 35px;border-radius: 50%">
+                              </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-md-10 esVideo-border">
 

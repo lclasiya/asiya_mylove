@@ -21,17 +21,9 @@
 </head>
 <body>
 <nav class="navbar navbar-inverse bg-inverse navbar-toggleable-md">
-    <a class="navbar-brand p-0" href="/" th:href="@{/ero}" style="font-size: 30px">エロポン</a>
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+    <a class="navbar-brand p-0" href="http://localhost:8765/"  style="font-size: 30px">エロポン</a>
+
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
-        <ul class="navbar-nav mr-auto">
-            <form class="form-inline " th:action="@{/ero}">
-                <input class="form-control " type="text" name="keyword" placeholder="検索キーワード入力" id="indexkeyword" >
-                <button type="submit" class="btn btn-outline-secondary my-2 my-sm-0" id="indexsearch"><i class="fa fa-search"></i></button>
-            </form>
-        </ul>
         <div sec:authorize="isAuthenticated()" class="row">
             <div class="mr-2">
                 <a th:href="@{/u/1}">

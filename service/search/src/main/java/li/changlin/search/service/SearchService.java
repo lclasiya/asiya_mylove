@@ -1,6 +1,7 @@
 package li.changlin.search.service;
 
 import li.changlin.search.entity.EsVideo;
+import li.changlin.user.entity.User;
 import li.changlin.video.entity.Video;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,4 +26,8 @@ public interface SearchService {
     void addEsVideoFromVideo(Integer id) throws IOException;
 
     EsVideo buildEsVideo(Video video);
+
+    List<EsVideo> getHotVideos();
+
+    List<User> getHotUsers();
 }

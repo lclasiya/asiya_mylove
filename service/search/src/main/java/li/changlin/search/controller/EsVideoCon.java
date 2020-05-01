@@ -71,6 +71,7 @@ public class EsVideoCon {
                     QueryBuilders.boolQuery().should(QueryBuilders.matchQuery("title",keyword))
                             .should(QueryBuilders.matchQuery("tags",keyword))
                             .should(QueryBuilders.matchQuery("object",keyword))
+                            .should(QueryBuilders.matchQuery("userName",keyword))
             );
             esVideoPage = sm.search(builder.build());
         } else{
@@ -84,6 +85,12 @@ public class EsVideoCon {
             esVideo.setCommentSize(Integer.valueOf(commnum));
             esVideo.setVoteSize(Integer.valueOf(votenum));
             ss.saveEsVideo(esVideo);
+        }
+        if (!async){
+            List<EsVideo> hotVideos = ss.getHotVideos();
+            List<User> hotUsers = ss.getHotUsers();
+            model.addAttribute("hotVideos",hotVideos);
+            model.addAttribute("hotUsers",hotUsers);
         }
         model.addAttribute("videoList", esVideoList);
         model.addAttribute("page", esVideoPage);

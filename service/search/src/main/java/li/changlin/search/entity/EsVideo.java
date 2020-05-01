@@ -20,7 +20,7 @@ public class EsVideo implements Serializable {
     @Field(type = FieldType.Text, analyzer = "ik_max_word")
     private String title;
 
-    @Field(type = FieldType.Text, analyzer = "ik_max_word")
+    @Field(type = FieldType.Keyword)
     private String userName;
 
 

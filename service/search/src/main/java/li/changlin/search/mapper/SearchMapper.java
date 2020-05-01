@@ -11,4 +11,5 @@ public interface SearchMapper extends ElasticsearchRepository<EsVideo,Integer> {
     Page<EsVideo> findByNagasaLikeAndObjectLikeAndGashitsuLikeAndTagsLike
             (String videolength, String object, String videoqua, String tags, Pageable pageable);
     List<EsVideo> findByUserNameOrderByCreateTimeDesc(String username);
+
 }
