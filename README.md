@@ -9,7 +9,7 @@
 * 用户头像，视频等都存在***fastdfs***上
 ***
 ### 各工具版本
-##### springboot-2.0.3,&emsp;   springcloud-Finchley.RELEASE,&emsp;   redis-4.0.14,&emsp;    elasticsearch-5.5.0,&emsp;   rabbitmq-3.7.7-management,&emsp;   fastdfs-(docker pull delron/fastdfs)    
+##### springboot-2.0.3,&emsp;   springcloud-Finchley.RELEASE,&emsp;   mysql-5.7,&emsp;  redis-4.0.14,&emsp;    elasticsearch-5.5.0,&emsp;   rabbitmq-3.7.7-management,&emsp;   fastdfs-(docker pull delron/fastdfs)    
 #### 主页:
 ![homepage](https://github.com/lclasiya/asiya_mylove/blob/master/common/src/main/java/li/changlin/common/images/主页.png)
 #### 用户注册:
