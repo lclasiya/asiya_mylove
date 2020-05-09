@@ -28,7 +28,7 @@ public class VideoServiceImpl implements VideoService {
     private RabbitTemplate rabbitTemplate;
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void addVideo(Video video) {
         Map<String,Object> map=new HashMap<>();
         System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
