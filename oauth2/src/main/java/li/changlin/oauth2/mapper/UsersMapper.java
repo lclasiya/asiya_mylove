@@ -20,4 +20,7 @@ public interface UsersMapper {
     List<User> listAll();
     Page<User> listAllWithPage();
 
+    User selectForLock(int id);
+    int addLovers(int id);
+
 }

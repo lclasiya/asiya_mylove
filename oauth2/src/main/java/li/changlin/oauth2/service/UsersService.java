@@ -18,4 +18,6 @@ public interface UsersService {
     List<User> listAll();
     Page<User> listAllWithPage();
 
+    void addLoversByPessimisticLock(int id);
+
 }

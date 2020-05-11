@@ -6,6 +6,7 @@ import li.changlin.oauth2.mapper.UsersMapper;
 import li.changlin.oauth2.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -48,4 +49,13 @@ public class UsersServiceImpl implements UsersService {
     public Page<User> listAllWithPage() {
         return um.listAllWithPage();
     }
+
+    @Override
+    @Transactional(rollbackFor = RuntimeException.class)
+    public void addLoversByPessimisticLock(int id) {
+     //   User user = um.selectForLock(id);
+        um.addLovers(id);
+    }
+
+
 }
