@@ -1,5 +1,6 @@
 # asiya_mylove
 ##### asiya_mylove是用springcloud开发的视频网站，可以简单实现用户和视频的管理，视频的点赞评论和播放，用户点赞等功能。此项目是我的第一个微服务项目，继承自springboot实现的[asiya](https://github.com/lclasiya/asiya)项目，以后会不断增加新功能，优化代码。目前使用到的主要后端技术点如下：
+* 微服务配置中心生产时基于***zookeeper***实现
 * 用户的权限管理和单点登录方面使用***oauth2***和***jwt***实现
 * 视频检索方面使用***elasticsearch***实现，可根据喜好或关键字来检索，视频名支持ik分词。通过聚合查询获得最热视频和用户
 * 视频的点赞和评论功能使用***redis***实现，其数据通过quartz定时存入数据库
