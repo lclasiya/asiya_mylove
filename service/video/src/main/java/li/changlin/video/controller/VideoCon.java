@@ -5,6 +5,8 @@ import li.changlin.common.response.Response;
 import li.changlin.user.entity.User;
 import li.changlin.video.entity.Video;
 import li.changlin.video.service.VideoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
@@ -25,7 +27,7 @@ import java.util.concurrent.TimeUnit;
 public class VideoCon {
     @Autowired
     private VideoService vs;
-
+    private Logger logger = LoggerFactory.getLogger(VideoCon.class);
 
     @GetMapping("/video/add")
     public String addero(){
@@ -44,6 +46,8 @@ public class VideoCon {
         } catch (Exception e) {
             return ResponseEntity.ok().body(new Response(false, e.getMessage()));
         }
+        logger.info("$$新增视频$$"+video.getId()+"$$"+video.getTitle()+"$$"+abc+"$$"+video.getVideoLength()+"$$"+
+                video.getVideoQua()+"$$"+video.getTags()+"$$"+video.getObject());
         String redirectUrl = "http://localhost:8765/";
         return ResponseEntity.ok().body(new Response(true, "アップロード成功", redirectUrl));
     }

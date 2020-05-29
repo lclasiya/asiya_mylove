@@ -12,6 +12,8 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -48,6 +50,7 @@ public class EsVideoCon {
     JdbcTemplate jdbcTemplate;
     @Autowired
     UserFeignClient ufc;
+    private Logger logger = LoggerFactory.getLogger(EsVideoCon.class);
 
     @GetMapping("/")
     public String listVideo(
@@ -105,10 +108,11 @@ public class EsVideoCon {
         return icon;
     }
     @GetMapping("/user/{username}")
-    public String userProfile(@PathVariable("username") String username,@RequestParam(value="videoID",required=false)Integer videoID, Model model) {
+    public String showOrDeleteVideo(@PathVariable("username") String username,@RequestParam(value="videoID",required=false)Integer videoID, Model model) {
         User user = ufc.getUser(username);
         if (videoID != null){
             sm.deleteById(videoID);
+            logger.info("$$删除视频$$"+videoID+"$$"+username);
         }
         List<EsVideo> esVideos = ss.findByUserName(username);
         model.addAttribute("videoList", esVideos);

@@ -69,6 +69,11 @@ public class AdminCon {
         model.addAttribute("foruser", user);
         return "user/edit";
     }
+    @GetMapping("/user/add")
+    public String adduser(Model model) {
+        model.addAttribute("user", new User(null,0,null,null,null,null,0));
+        return "user/add";
+    }
     @PostMapping("/user")
     public ResponseEntity<Response> addOrEdituser(User user) {
         int userid = user.getId();

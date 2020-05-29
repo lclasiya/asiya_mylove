@@ -13,7 +13,7 @@
         <result column="authorityid" property="authorityid" />
         <result column="lovers" property="lovers" />
     </resultMap>
-    <insert id="addUser" >
+    <insert id="addUser" useGeneratedKeys="true" keyProperty="id">
         insert into  user (username,avatar,sex,tend, age, email, password,authorityid,lovers)
         values (#{username},#{avatar},#{sex},#{tend},#{age},#{email},#{password},#{authorityid},#{lovers})
     </insert>

@@ -2,22 +2,20 @@ package li.changlin.search.listener;
 
 import com.rabbitmq.client.Channel;
 import li.changlin.search.service.SearchService;
-import org.springframework.amqp.core.ExchangeTypes;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
-import org.springframework.amqp.rabbit.annotation.Exchange;
-import org.springframework.amqp.rabbit.annotation.Queue;
-import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.AmqpHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
+import org.springframework.util.SerializationUtils;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 @Component
 public class SearchMqListener {
@@ -25,13 +23,14 @@ public class SearchMqListener {
     private SearchService ss;
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
-
     public static String sessionId;
+    private Logger logger = LoggerFactory.getLogger(SearchMqListener.class);
 
     @RabbitListener(queues = "asiya.video.save.queue")
     public void listenCreate(Map map,Channel channel,@Header(AmqpHeaders.DELIVERY_TAG) long tag/*,
                              @Header(AmqpHeaders.REDELIVERED) boolean reDelivered*/)throws IOException{
         try {
+            //int a = 1/0;
             sessionId = (String) map.get("sessionId");
             Integer videoId = (Integer) map.get("videoId");
             if (stringRedisTemplate.opsForValue().get("mideng:"+videoId)==null){
@@ -51,7 +50,8 @@ public class SearchMqListener {
     }
     @RabbitListener(queues = "asiya.video.dl.queue")
     public void listenDL(Channel channel, Message message, @Header(AmqpHeaders.DELIVERY_TAG) long tag)throws IOException{
-        System.out.println("需要处理的异常消息："+ new String(message.getBody()));
+        Map map = (HashMap)SerializationUtils.deserialize(message.getBody());
+        logger.info("上传失败需要处理的视频--->  ID: ["+map.get("videoId")+"]");
         channel.basicAck(tag,false);
     }
 

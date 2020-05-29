@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!--官方配置 start-->
+    <!--保留官方配置，方便使用官方配置的特性,参考:spring-boot-2.1.0.RELEASE.jar!\org\springframework\boot\logging\logback\base.xml-->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+    <root level="info">
+        <appender-ref ref="CONSOLE" />
+    </root>
+    <!-- 自定义配置__单独输出到一个日志文件中 -->
+    <appender name="USER_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+        <file>${LOG_FILE}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_FILE}.%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
+            <maxFileSize>${LOG_FILE_MAX_SIZE:-10MB}</maxFileSize>
+            <maxHistory>${LOG_FILE_MAX_HISTORY:-0}</maxHistory>
+        </rollingPolicy>
+    </appender>
+    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>192.168.30.164:5044</destination>
+        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder">
+            <customFields>{"appname":"userlog"}</customFields>
+        </encoder>
+    </appender>
+    <!--指定包或者类的日志配置（这里是局部配置，它能覆盖全局配置）-->
+    <!-- 自定义配置__配置业务日志输出至单独的日志文件中 -->
+    <logger name="li.changlin.oauth2.controller.UserCon" additivity="false" level="INFO">
+        <!-- 引用自定义的appender -->
+        <appender-ref ref="USER_LOG"/>
+        <!-- 这里也引用控制台appender，才能在控制台中看到我们的日志 -->
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="LOGSTASH"/>
+    </logger>
+</configuration>

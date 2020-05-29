@@ -2,11 +2,14 @@ package li.changlin.oauth2.controller;
 
 import com.luhuiguo.fastdfs.domain.StorePath;
 import com.luhuiguo.fastdfs.service.FastFileStorageClient;
+import li.changlin.oauth2.utils.LogAop;
 import li.changlin.user.entity.User;
 import li.changlin.oauth2.service.AuthorityService;
 import li.changlin.oauth2.service.UsersService;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -38,6 +41,7 @@ public class UserCon {
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private RedisTemplate redisTemplate;
+    private Logger logger = LoggerFactory.getLogger(UserCon.class);
 
     @GetMapping("/register")
     public String getRegister() {
@@ -46,7 +50,8 @@ public class UserCon {
     @PostMapping("/register")
 //    @AdviceAnnotation
     public String postRegister(User user,Model model) {
-        user.setEncodePassword(user.getPassword());
+        String rawPassword = user.getPassword();
+        user.setEncodePassword(rawPassword);
         try {
             us.addUser(user);
         }catch (ConstraintViolationException e){
@@ -58,6 +63,7 @@ public class UserCon {
             model.addAttribute("failMsg",messages);
             return "userAddFail";
         }
+        logger.info("$$新增用户$$"+user.getId()+"$$"+user.getUsername()+"$$"+rawPassword);
         return "redirect:http://localhost:8765/";
     }
     @PostMapping("/userIcon")
@@ -76,11 +82,6 @@ public class UserCon {
     public User getUser(@RequestParam(value = "username")String username){
         User user = us.getUserByName(username);
         return user;
-    }
-    @GetMapping("/user/add")
-    public String adduser(Model model) {
-        model.addAttribute("user", new User(null,0,null,null,null,null,0));
-        return "user/add";
     }
     @GetMapping("/userEdit")
     //@PreAuthorize("authentication.name.equals(#username)")
@@ -101,6 +102,7 @@ public class UserCon {
         originalUser.setSex(user.getSex());
         originalUser.setEncodePassword(user.getPassword());
         us.updateById(originalUser);
+        logger.info("$$修改用户$$"+user.getId()+"$$"+user.getUsername()+"$$"+user.getPassword());
        // SecurityContextHolder.clearContext();
         return "redirect:http://localhost:8765/";
     }
