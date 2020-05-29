@@ -8,6 +8,7 @@
 * 用户点赞方面使用redis锁保证点赞和取消点赞的原子性
 * 频繁查询的用户和用户头像通过spring cache和redis提高查询速度
 * 用户头像，视频等都存在***fastdfs***上
+* 使用ELK记录用户和视频日志
 ***
 ### 各工具版本
 ##### springboot-2.0.3,&emsp;   springcloud-Finchley.RELEASE,&emsp;   mysql-5.7,&emsp;  redis-4.0.14,&emsp;    elasticsearch-5.5.0,&emsp;   rabbitmq-3.7.7-management,&emsp;   fastdfs-(docker pull delron/fastdfs)    
